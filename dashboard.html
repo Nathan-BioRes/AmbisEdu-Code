@@ -63,6 +63,45 @@ button{font:inherit;color:inherit;border:0;cursor:pointer}.layout{display:flex;m
 </main>
 </div>
 <nav class="bottom" id="bottomNav"></nav>
-<script src="./script.js"></script>
-</body>
-</html>
+<script>
+const root=document.documentElement,theme=document.getElementById("theme");
+const savedTheme=localStorage.getItem("akademikTheme")||"light";
+root.dataset.theme=savedTheme;
+theme.textContent=savedTheme==="dark"?"🌙":"☀️";
+theme.onclick=()=>{let d=root.dataset.theme==="dark";root.dataset.theme=d?"light":"dark";localStorage.setItem("akademikTheme",d?"light":"dark");theme.textContent=d?"☀️":"🌙"};
+
+let profile={};
+try{profile=JSON.parse(localStorage.getItem("akademikProfileV5"))||{}}catch(e){}
+const userLang=profile.language||"English";
+const edu=profile.educationLevel||"Not set";
+const amount=profile.timeAmount||"0";
+const unit=profile.timeUnit||"Hours";
+
+const langDict = {
+  "English": {
+    greetH: "Good evening.", greetP: "Ready to make progress today?", sideFoot: "Your academic copilot<br>Learn smarter, every day.",
+    profTitle: "Your Profile", profLang: "Language", profEdu: "Education", profTime: "Study Time", hide: "Hide", show: "Show Profile", unitH: "Hours", unitM: "Minutes",
+    menuChat: "AI Chatbot", menuRoad: "Roadmap Tracker", menuTest: "Mock Test", menuSys: "System Settings",
+    chatSub: "Your personal academic assistant.", chatMain: "How can I help you learn?", chatDesc: "Ask about concepts, study plans, assignments, or your next learning step.",
+    roadSub: "Keep your learning journey on track.", roadProgress: "Current Progress", roadHabit: "Complete your learning milestones and build consistent study habits.", roadOf: "of your current roadmap", roadF: "Foundations", roadC: "Core Skills", roadA: "Advanced", statusComp: "Completed", statusProg: "In progress", statusUp: "Upcoming",
+    testSub: "Practice under realistic test conditions.", testTitle: "Ready for a challenge?", testDesc: "Your personalized mock tests will appear here.", testBtn: "Start Mock Test",
+    sysSub: "Configure backend parameters.", sysTitle: "System Setup", sysDesc: "Placeholder for account management, API verification, and authentication settings via database triggers."
+  },
+  "Bahasa Indonesia": {
+    greetH: "Selamat malam.", greetP: "Siap untuk berkembang hari ini?", sideFoot: "Copilot akademik Anda<br>Belajar lebih cerdas, setiap hari.",
+    profTitle: "Profil Anda", profLang: "Bahasa", profEdu: "Pendidikan", profTime: "Waktu Belajar", hide: "Sembunyikan", show: "Tampilkan Profil", unitH: "Jam", unitM: "Menit",
+    menuChat: "AI Chatbot", menuRoad: "Pelacak Roadmap", menuTest: "Ujian Tiruan", menuSys: "Pengaturan Sistem",
+    chatSub: "Asisten akademik pribadi Anda.", chatMain: "Ada yang bisa saya bantu pelajari?", chatDesc: "Tanyakan tentang konsep, rencana studi, tugas, atau langkah belajar Anda berikutnya.",
+    roadSub: "Jaga agar perjalanan belajar Anda tetap sesuai jalur.", roadProgress: "Progres Saat Ini", roadHabit: "Selesaikan target belajar Anda dan bangun kebiasaan belajar yang konsisten.", roadOf: "dari total roadmap Anda", roadF: "Dasar-Dasar", roadC: "Keahlian Inti", roadA: "Tingkat Lanjut", statusComp: "Selesai", statusProg: "Sedang berjalan", statusUp: "Mendatang",
+    testSub: "Latihan di bawah kondisi ujian yang realistis.", testTitle: "Siap menghadapi tantangan?", testDesc: "Ujian tiruan yang dipersonalisasi akan muncul di sini.", testBtn: "Mulai Ujian",
+    sysSub: "Konfigurasi parameter backend.", sysTitle: "Pengaturan Sistem", sysDesc: "Wadah penampung untuk manajemen akun, verifikasi API, dan pengaturan autentikasi menggunakan pemicu database."
+  }
+};
+
+const d = langDict[userLang] || langDict["English"];
+const displayUnit = unit === "Hours" ? d.unitH : d.unitM;
+
+document.getElementById("greetingArea").innerHTML = '<h1>'+d.greetH+'</h1><p>'+d.greetP+'</p>';
+document.getElementById("sideFoot").innerHTML = d.sideFoot;
+
+const profileEl = document.getElementById("profile");
