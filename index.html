@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AkademikCopilot</title>
+  <style>
+    :root { --bg: #f8fafc; --card: white; --text: #0f172a; --border: #e2e8f0; --btn-hov: #f8fafc; --primary: #4f46e5; --prim-hov: #4338ca; --active-bg: #e0e7ff; --active-txt: #4338ca; --sub: #64748b; }
+    .dark { --bg: #0f172a; --card: #1e293b; --text: #f8fafc; --border: #334155; --btn-hov: #334155; --primary: #6366f1; --prim-hov: #4f46e5; --active-bg: #312e81; --active-txt: #e0e7ff; --sub: #94a3b8; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 90vh; transition: background 0.2s, color 0.2s; }
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 24px; width: 100%; max-width: 500px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); position: relative; }
+    .theme-toggle { position: absolute; top: 20px; right: 20px; background: transparent; border: none; font-size: 20px; cursor: pointer; padding: 5px; z-index: 10; }
+    .brand { display: inline-flex; width: 48px; height: 48px; background: var(--primary); color: white; font-weight: bold; border-radius: 14px; align-items: center; justify-content: center; margin-bottom: 12px; }
+    .progress-bar { height: 6px; background: var(--border); border-radius: 10px; margin-bottom: 20px; overflow: hidden; width: 80%; }
+    .progress-fill { height: 100%; background: var(--primary); transition: width 0.3s; }
+    .btn { display: block; width: -webkit-fill-available; padding: 14px; border: 1px solid var(--border); background: var(--card); color: var(--text); border-radius: 14px; text-align: left; font-weight: 500; font-size: 16px; cursor: pointer; margin-bottom: 10px; transition: all 0.2s; }
+    .btn:hover { background: var(--btn-hov); }
+    .btn-active { background: var(--active-bg); border-color: var(--primary); color: var(--active-txt); box-shadow: 0 0 0 2px rgba(99,102,241,0.2); }
+    .btn-next { background: var(--primary); color: white; text-align: center; border: none; font-weight: 600; margin-top: 15px; width: 120px; height: 48px; border-radius: 12px; cursor: pointer; }
+    .btn-back { background: transparent; border: none; color: var(--sub); font-weight: 600; cursor: pointer; margin-top: 25px; padding: 10px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    select, input[type="text"], input[type="number"] { width: -webkit-fill-available; padding: 14px; border: 1px solid var(--border); border-radius: 12px; font-size: 16px; margin-top: 10px; background: var(--card); color: var(--text); box-sizing: border-box; }
+    .slider-box { background: var(--btn-hov); padding: 16px; border-radius: 16px; border: 1px solid var(--border); margin-top: 15px; }
+    input[type="range"] { width: 100%; accent-color: var(--primary); margin-top: 15px; }
+    .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 15px; }
+    .summary-item { background: var(--btn-hov); padding: 12px; border-radius: 12px; border: 1px solid var(--border); }
+    .summary-label { font-size: 12px; color: var(--sub); margin: 0; }
+    .summary-val { font-weight: 600; margin: 4px 0 0 0; color: var(--text); }
+    .num-input { width: 60px !important; padding: 6px !important; margin: 0 !important; text-align: center; border-radius: 8px !important; }
+  </style>
+</head>
+<body>
+  <div id="app" class="card"></div>
+  <script src="./script.js"></script>
+</body>
+</html>
