@@ -3,26 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dashboard</title>
+<title>AmbisEdu Dashboard</title>
 <style>
-:root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#6b7280;--line:#e5e7eb;--accent:#5b5ce2;--accent2:#eef0ff;--shadow:0 12px 35px #17203312}
-[data-theme=dark]{--bg:#10131a;--card:#181c25;--text:#f1f5f9;--muted:#9ca3af;--line:#2a303b;--accent:#8586ff;--accent2:#252743;--shadow:0 12px 35px #0005}
+:root{--bg:#f8fafc;--card:#ffffff;--text:#0f1115;--muted:#64748b;--line:#e2e8f0;--accent:#4f46e5;--accent2:#e0e7ff;--star:#eab308;--shadow:0 8px 30px rgba(15,17,21,0.04)}
+[data-theme=dark]{--bg:#0f1115;--card:#161920;--text:#f8fafc;--muted:#94a3b8;--line:#222530;--accent:#6366f1;--accent2:#1e1b4b;--star:#facc15;--shadow:0 12px 40px rgba(0,0,0,0.4)}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px Inter,system-ui,-apple-system,sans-serif;transition:.25s}
 button{font:inherit;color:inherit;border:0;cursor:pointer}.layout{display:flex;min-height:100vh}
 .sidebar{width:245px;background:var(--card);border-right:1px solid var(--line);padding:25px 16px;position:fixed;inset:0 auto 0 0;display:flex;flex-direction:column;z-index:10}
-.logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;margin:0 10px 38px}.logo b{background:var(--accent);color:#fff;border-radius:10px;padding:8px 9px}
+.logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;margin:0 10px 38px}.logo b{background:#0f1115;color:#fff;border-radius:10px;padding:6px 10px;border:1px solid #ffffff20;font-size:16px}[data-theme=dark] .logo b{background:#ffffff;color:#0f1115}
+.logo span i{color:var(--star)}
 .nav{display:grid;gap:7px}.nav button{background:transparent;text-align:left;padding:13px 14px;border-radius:12px;color:var(--muted);display:flex;gap:12px;align-items:center;width:100%}.nav button:hover,.nav button.active{background:var(--accent2);color:var(--accent);font-weight:700}
 .side-foot{margin-top:auto;color:var(--muted);font-size:12px;padding:10px}
 .main{margin-left:245px;width:calc(100% - 245px);padding:25px;min-width:0}.top{max-width:1050px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:15px}.greet h1{margin:0;font-size:27px}.greet p{margin:5px 0 0;color:var(--muted)}
-.actions{display:flex;gap:9px}.theme{width:42px;height:42px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);display:grid;place-items:center;font-size:18px}
+.actions{display:flex;gap:9px}
+.theme{width:42px;height:42px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);display:grid;place-items:center;font-size:18px;color:var(--star)}
 .profile{max-width:1050px;margin:22px auto 25px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;display:flex;align-items:center;gap:16px;box-shadow:var(--shadow);position:relative;transition:all 0.3s ease;overflow:hidden}
 .profile.hidden-prof{height:50px;padding-top:12px;padding-bottom:12px}.profile.hidden-prof .prof-body{opacity:0;pointer-events:none}
-.hide-prof-btn{position:absolute;top:14px;right:16px;background:none;font-size:12px;color:var(--muted);font-weight:600}
+.hide-prof-btn{position:absolute;top:14px;right:16px;background:none;font-size:12px;color:var(--muted);font-weight:600;padding:2px 6px;border-radius:6px}
+.hide-prof-btn:hover{background:var(--bg)}
 .prof-body{display:flex;align-items:center;gap:16px;width:100%;transition:opacity 0.2s}
 .avatar{width:43px;height:43px;border-radius:13px;background:var(--accent2);color:var(--accent);display:grid;place-items:center;font-weight:800}.pdata{display:flex;gap:24px;flex-wrap:wrap}.pdata span{display:block;color:var(--muted);font-size:11px;margin-bottom:3px}.pdata strong{font-size:13px}
 .workspace{max-width:1050px;margin:auto;background:var(--card);border:1px solid var(--line);border-radius:22px;min-height:450px;box-shadow:var(--shadow);padding:30px}.view{display:none;animation:in .25s ease}.view.active{display:block}@keyframes in{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
-.view-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.view h2{margin:0;font-size:24px}.view-head p{color:var(--muted);margin:6px 0 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.box{border:1px solid var(--line);background:var(--bg);border-radius:16px;padding:20px}.box h3{margin:0 0 8px}.box p{color:var(--muted);line-height:1.55;margin:0}.chat{height:300px;border:1px solid var(--line);border-radius:16px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;color:var(--muted);padding:20px}.chat strong{font-size:20px;color:var(--text);margin-bottom:7px}.progress{height:9px;background:var(--line);border-radius:20px;overflow:hidden;margin:18px 0}
-.progress i{display:block;height:100%;width:62%;background:var(--accent);border-radius:20px}.test{display:flex;align-items:center;justify-content:center;min-height:300px;text-align:center}.test button{margin-top:18px;padding:11px 18px;background:var(--accent);color:#fff;border-radius:10px;font-weight:700}.bottom{display:none}
+.view-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.view h2{margin:0;font-size:24px}.view-head p{color:var(--muted);margin:6px 0 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.box{border:1px solid var(--line);background:var(--bg);border-radius:16px;padding:20px}.box h3{margin:0 0 8px}.box p{color:var(--muted);line-height:1.55;margin:0}
+.progress{height:9px;background:var(--line);border-radius:20px;overflow:hidden;margin:18px 0}.progress i{display:block;height:100%;width:62%;background:var(--accent);border-radius:20px}.test{display:flex;align-items:center;justify-content:center;min-height:300px;text-align:center}.test button{margin-top:18px;padding:11px 18px;background:var(--accent);color:#fff;border-radius:10px;font-weight:700}.bottom{display:none}
+.chat-window{border:1px solid var(--line);border-radius:18px;background:var(--bg);display:flex;flex-direction:column;height:420px;position:relative}
+.chat-header{background:var(--card);border-bottom:1px solid var(--line);padding:12px 16px;border-radius:18px 18px 0 0;display:flex;justify-content:space-between;align-items:center}
+.chat-messages{flex:1;padding:16px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:75%;padding:11px 15px;border-radius:14px;line-height:1.5;font-size:14px}
+.msg.ai{background:var(--card);color:var(--text);align-self:flex-start;border-bottom-left-radius:4px;border:1px solid var(--line)}
+.msg.user{background:var(--accent);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
+.chat-footer{background:var(--card);border-top:1px solid var(--line);padding:12px;border-radius:0 0 18px 18px;display:flex;flex-direction:column;gap:8px}
+.chat-options{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.opt-btn{background:var(--bg);border:1px solid var(--line);color:var(--text);padding:6px 12px;border-radius:20px;font-size:12px;font-weight:500;transition:all 0.2s}
+.opt-btn:hover{background:var(--accent2);border-color:var(--accent);color:var(--accent)}
+.chat-settings-panel{position:absolute;top:55px;right:16px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:var(--shadow);z-index:30;display:none;width:220px}
+.settings-group{margin-bottom:10px}.settings-group label{display:block;font-size:11px;color:var(--muted);margin-bottom:4px}
+.settings-group select, .settings-group input{width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:8px;font-size:13px;background:var(--card);color:var(--text)}
 @media(max-width:600px){
 .sidebar{display:none}.main{margin:0;width:100%;padding:18px 14px 90px}.top{align-items:flex-start}.greet h1{font-size:22px}.greet p{font-size:13px}.profile{margin:18px auto;padding:14px}.pdata{gap:12px}.workspace{padding:22px 16px;border-radius:18px;min-height:420px}.grid{grid-template-columns:1fr}.view-head{margin-bottom:20px}.view h2{font-size:21px}.bottom{display:flex;position:fixed;z-index:20;bottom:0;left:0;right:0;height:68px;background:var(--card);border-top:1px solid var(--line);justify-content:space-around;padding:7px 4px;box-shadow:0 -8px 25px #0000000c}
 .bottom button{background:none;color:var(--muted);font-size:10px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:5px 4px;border-radius:10px;width:23%}.bottom button b{font-size:18px;font-weight:500}.bottom button.active{color:var(--accent);background:var(--accent2);font-weight:700}}
@@ -31,7 +47,7 @@ button{font:inherit;color:inherit;border:0;cursor:pointer}.layout{display:flex;m
 <body>
 <div class="layout">
 <aside class="sidebar">
-<div class="logo"><b>AC</b> AkademikCopilot</div>
+<div class="logo"><b>Ambis</b>Edu<span> <i>★</i></span></div>
 <nav class="nav" id="sideNav"></nav>
 <div class="side-foot" id="sideFoot"></div>
 </aside>
@@ -44,7 +60,33 @@ button{font:inherit;color:inherit;border:0;cursor:pointer}.layout{display:flex;m
 <section class="workspace">
 <div class="view active" id="chat">
 <div class="view-head"><div id="headChat"></div></div>
-<div class="chat" id="bodyChat"></div>
+<div class="chat-window">
+  <div class="chat-header">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:8px;height:8px;background:#10b981;border-radius:50%"></div>
+      <strong style="font-size:14px" id="botTitle">Copilot AI</strong>
+    </div>
+    <button style="background:none;font-size:14px;padding:4px" onclick="toggleChatSettings()">⚙️</button>
+  </div>
+  <div class="chat-settings-panel" id="chatSettings">
+    <div class="settings-group">
+      <label id="lblTone">Tone</label>
+      <select id="toneSelect" onchange="updateChatPrefs()">
+        <option value="Casual">Casual</option>
+        <option value="Professional" selected>Professional</option>
+        <option value="Efficient">Efficient</option>
+      </select>
+    </div>
+    <div class="settings-group">
+      <label id="lblCall">Callsign</label>
+      <input type="text" id="callInput" value="Kak" oninput="updateChatPrefs()">
+    </div>
+  </div>
+  <div class="chat-messages" id="chatMessages"></div>
+  <div class="chat-footer">
+    <div class="chat-options" id="chatOptionsArea"></div>
+  </div>
+</div>
 </div>
 <div class="view" id="roadmap">
 <div class="view-head"><div id="headRoadmap"></div></div>
@@ -79,29 +121,4 @@ const unit=profile.timeUnit||"Hours";
 
 const langDict = {
   "English": {
-    greetH: "Good evening.", greetP: "Ready to make progress today?", sideFoot: "Your academic copilot<br>Learn smarter, every day.",
-    profTitle: "Your Profile", profLang: "Language", profEdu: "Education", profTime: "Study Time", hide: "Hide", show: "Show Profile", unitH: "Hours", unitM: "Minutes",
-    menuChat: "AI Chatbot", menuRoad: "Roadmap Tracker", menuTest: "Mock Test", menuSys: "System Settings",
-    chatSub: "Your personal academic assistant.", chatMain: "How can I help you learn?", chatDesc: "Ask about concepts, study plans, assignments, or your next learning step.",
-    roadSub: "Keep your learning journey on track.", roadProgress: "Current Progress", roadHabit: "Complete your learning milestones and build consistent study habits.", roadOf: "of your current roadmap", roadF: "Foundations", roadC: "Core Skills", roadA: "Advanced", statusComp: "Completed", statusProg: "In progress", statusUp: "Upcoming",
-    testSub: "Practice under realistic test conditions.", testTitle: "Ready for a challenge?", testDesc: "Your personalized mock tests will appear here.", testBtn: "Start Mock Test",
-    sysSub: "Configure backend parameters.", sysTitle: "System Setup", sysDesc: "Placeholder for account management, API verification, and authentication settings via database triggers."
-  },
-  "Bahasa Indonesia": {
-    greetH: "Selamat malam.", greetP: "Siap untuk berkembang hari ini?", sideFoot: "Copilot akademik Anda<br>Belajar lebih cerdas, setiap hari.",
-    profTitle: "Profil Anda", profLang: "Bahasa", profEdu: "Pendidikan", profTime: "Waktu Belajar", hide: "Sembunyikan", show: "Tampilkan Profil", unitH: "Jam", unitM: "Menit",
-    menuChat: "AI Chatbot", menuRoad: "Pelacak Roadmap", menuTest: "Ujian Tiruan", menuSys: "Pengaturan Sistem",
-    chatSub: "Asisten akademik pribadi Anda.", chatMain: "Ada yang bisa saya bantu pelajari?", chatDesc: "Tanyakan tentang konsep, rencana studi, tugas, atau langkah belajar Anda berikutnya.",
-    roadSub: "Jaga agar perjalanan belajar Anda tetap sesuai jalur.", roadProgress: "Progres Saat Ini", roadHabit: "Selesaikan target belajar Anda dan bangun kebiasaan belajar yang konsisten.", roadOf: "dari total roadmap Anda", roadF: "Dasar-Dasar", roadC: "Keahlian Inti", roadA: "Tingkat Lanjut", statusComp: "Selesai", statusProg: "Sedang berjalan", statusUp: "Mendatang",
-    testSub: "Latihan di bawah kondisi ujian yang realistis.", testTitle: "Siap menghadapi tantangan?", testDesc: "Ujian tiruan yang dipersonalisasi akan muncul di sini.", testBtn: "Mulai Ujian",
-    sysSub: "Konfigurasi parameter backend.", sysTitle: "Pengaturan Sistem", sysDesc: "Wadah penampung untuk manajemen akun, verifikasi API, dan pengaturan autentikasi menggunakan pemicu database."
-  }
-};
-
-const d = langDict[userLang] || langDict["English"];
-const displayUnit = unit === "Hours" ? d.unitH : d.unitM;
-
-document.getElementById("greetingArea").innerHTML = '<h1>'+d.greetH+'</h1><p>'+d.greetP+'</p>';
-document.getElementById("sideFoot").innerHTML = d.sideFoot;
-
-const profileEl = document.getElementById("profile");
+    greetH: "Good evening.", greetP: "Ready to make progress today?", sideFoot: "AmbisEdu Corporate<br>Learn smarter, every day.",
