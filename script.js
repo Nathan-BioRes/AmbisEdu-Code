@@ -82,7 +82,8 @@ function renderQuestionnaire() {
           <option value="Minutes" ${state.timeUnit==='Minutes'?'selected':''}>${t.unitM}</option>
         </select>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center"><button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button><button id="subBtn" class="btn btn-next" ${!state.timeAmount.toString().trim()?'disabled style="opacity:0.4"':''} onclick="localStorage.setItem(STORAGE_KEY,JSON.stringify(state));render()">${t.finish}</button></div>`;
+      <div style="display:flex;justify-content:space-between;align-items:center"><button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button><button id="subBtn" class="btn btn-next" ${!state.timeAmount.toString().trim()?'disabled style="opacity:0.4"':''} 
+onclick="localStorage.setItem(STORAGE_KEY, JSON.stringify(state));window.location.href='dashboard.html'>${t.finish}</button></div>`;
   }
   app.innerHTML = html;
 }
