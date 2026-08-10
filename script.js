@@ -73,17 +73,45 @@ function renderQuestionnaire() {
     html += `<div style="display:flex;justify-content:space-between;align-items:center"><button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button><button class="btn btn-next" ${state.subjects.length===0?'disabled style="opacity:0.4"':''} onclick="state.currentStep++;render()">${t.next}</button></div>`;
   } else if (state.currentStep === 4) {
     html += `<h3>${t.q4}</h3><div class="slider-box"><div style="display:flex;justify-content:space-between;align-items:center;font-weight:600"><span>${t.est}</span><div style="display:flex;align-items:center;gap:4px"><input type="number" min="10" max="100" id="numBox" class="num-input" value="${state.masteryLevel}" oninput="syncMastery(this.value, 'slider')">%</div></div><input type="range" min="10" max="100" id="slideBar" value="${state.masteryLevel}" oninput="syncMastery(this.value, 'box')"></div><div style="display:flex;justify-content:space-between;align-items:center"><button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button><button class="btn btn-next" onclick="state.currentStep++;render()">${t.next}</button></div>`;
-   } else if (state.currentStep === 5) {
-    html += `<h3>${t.q5}</h3>
-      <div class="grid-2">
-        <input id="timeAmountInput" type="number" min="1" placeholder="0"
-          value="${state.timeAmount}"
-          oninput="updateTimeAmount(this.value)">
-        <select id="timeUnitSelect" onchange="updateTimeUnit(this.value)">
-          <option value="Hours" ${state.timeUnit === 'Hours' ? 'selected' : ''}>${t.unitH}</option>
-          <option value="Minutes" ${state.timeUnit === 'Minutes' ? 'selected' : ''}>${t.unitM}</option>
-        </select>
-      </div>
+ } else if (state.currentStep === 5) {
+  html += `
+    <h3>${t.q5}</h3>
+
+    <div class="grid-2">
+      <input
+        id="timeAmountInput"
+        type="number"
+        min="1"
+        placeholder="0"
+        value="${state.timeAmount}"
+      >
+
+      <select id="timeUnitSelect">
+        <option value="Hours" ${state.timeUnit === "Hours" ? "selected" : ""}>
+          ${t.unitH}
+        </option>
+        <option value="Minutes" ${state.timeUnit === "Minutes" ? "selected" : ""}>
+          ${t.unitM}
+        </option>
+      </select>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:25px;gap:20px;">
+      <button type="button" class="btn-back" id="backBtn">
+        ${t.back}
+      </button>
+
+      <button
+        type="button"
+        id="subBtn"
+        class="btn btn-next"
+        ${!state.timeAmount.toString().trim() ? 'disabled style="opacity:0.4"' : ''}
+      >
+        ${t.finish}
+      </button>
+    </div>
+  `;
+}
       <div style="display:flex;justify-content:space-between;align-items:center">
         <button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button>
         <button
@@ -129,7 +157,46 @@ function updateTimeUnit(val) { state.timeUnit = val; }
 function toggleSubject(sub) {
   if (state.subjects.includes(sub)) { state.subjects = state.subjects.filter(s => s !== sub); } 
   else { state.subjects.push(sub); }
-  renderQuestionnaire();
+  app.innerHTML = html;
+
+// Step 5 controls
+if (state.currentStep === 5) {
+  const timeInput = document.getElementById("timeAmountInput");
+  const timeUnit = document.getElementById("timeUnitSelect");
+  const backBtn = document.getElementById("backBtn");
+  const subBtn = document.getElementById("subBtn");
+
+  if (timeInput) {
+    timeInput.addEventListener("input", function () {
+      updateTimeAmount(this.value);
+    });
+  }
+
+  if (timeUnit) {
+    timeUnit.addEventListener("change", function () {
+      updateTimeUnit(this.value);
+    });
+  }
+
+  if (backBtn) {
+    backBtn.addEventListener("click", function () {
+      state.currentStep--;
+      render();
+    });
+  }
+
+  if (subBtn) {
+    subBtn.addEventListener("click", function () {
+      if (!state.timeAmount.toString().trim()) return;
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(state)
+      );
+
+      window.location.href = "dashboard.html";
+    });
+  }
 }
 
 render();
