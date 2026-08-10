@@ -73,15 +73,27 @@ function renderQuestionnaire() {
     html += `<div style="display:flex;justify-content:space-between;align-items:center"><button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button><button class="btn btn-next" ${state.subjects.length===0?'disabled style="opacity:0.4"':''} onclick="state.currentStep++;render()">${t.next}</button></div>`;
   } else if (state.currentStep === 4) {
     html += `<h3>${t.q4}</h3><div class="slider-box"><div style="display:flex;justify-content:space-between;align-items:center;font-weight:600"><span>${t.est}</span><div style="display:flex;align-items:center;gap:4px"><input type="number" min="10" max="100" id="numBox" class="num-input" value="${state.masteryLevel}" oninput="syncMastery(this.value, 'slider')">%</div></div><input type="range" min="10" max="100" id="slideBar" value="${state.masteryLevel}" oninput="syncMastery(this.value, 'box')"></div><div style="display:flex;justify-content:space-between;align-items:center"><button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button><button class="btn btn-next" onclick="state.currentStep++;render()">${t.next}</button></div>`;
-  } else if (state.currentStep === 5) {
+   } else if (state.currentStep === 5) {
     html += `<h3>${t.q5}</h3>
       <div class="grid-2">
-        <input id="timeAmountInput" type="number" min="1" placeholder="0" value="${state.timeAmount}" oninput="updateTimeAmount(this.value)">
+        <input id="timeAmountInput" type="number" min="1" placeholder="0"
+          value="${state.timeAmount}"
+          oninput="updateTimeAmount(this.value)">
         <select id="timeUnitSelect" onchange="updateTimeUnit(this.value)">
-          <option value="Hours" ${state.timeUnit==='Hours'?'selected':''}>${t.unitH}</option>
-          <option value="Minutes" ${state.timeUnit==='Minutes'?'selected':''}>${t.unitM}</option>
+          <option value="Hours" ${state.timeUnit === 'Hours' ? 'selected' : ''}>${t.unitH}</option>
+          <option value="Minutes" ${state.timeUnit === 'Minutes' ? 'selected' : ''}>${t.unitM}</option>
         </select>
       </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button>
+        <button
+          id="subBtn"
+          class="btn btn-next"
+          ${!state.timeAmount.toString().trim() ? 'disabled style="opacity:0.4"' : ''}
+          onclick="localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); window.location.href='dashboard.html';"
+        >${t.finish}</button>
+      </div>`;
+  }
       <div style="display:flex;justify-content:space-between;align-items:center"><button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button><button id="subBtn" class="btn btn-next" ${!state.timeAmount.toString().trim()?'disabled style="opacity:0.4"':''} 
 onclick="localStorage.setItem(STORAGE_KEY, JSON.stringify(state));window.location.href='dashboard.html'>${t.finish}</button></div>`;
   }
