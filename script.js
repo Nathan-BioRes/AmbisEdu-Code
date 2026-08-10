@@ -73,57 +73,52 @@ function renderQuestionnaire() {
     html += `<div style="display:flex;justify-content:space-between;align-items:center"><button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button><button class="btn btn-next" ${state.subjects.length===0?'disabled style="opacity:0.4"':''} onclick="state.currentStep++;render()">${t.next}</button></div>`;
   } else if (state.currentStep === 4) {
     html += `<h3>${t.q4}</h3><div class="slider-box"><div style="display:flex;justify-content:space-between;align-items:center;font-weight:600"><span>${t.est}</span><div style="display:flex;align-items:center;gap:4px"><input type="number" min="10" max="100" id="numBox" class="num-input" value="${state.masteryLevel}" oninput="syncMastery(this.value, 'slider')">%</div></div><input type="range" min="10" max="100" id="slideBar" value="${state.masteryLevel}" oninput="syncMastery(this.value, 'box')"></div><div style="display:flex;justify-content:space-between;align-items:center"><button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button><button class="btn btn-next" onclick="state.currentStep++;render()">${t.next}</button></div>`;
- } else if (state.currentStep === 5) {
-  html += `
-    <h3>${t.q5}</h3>
-
-    <div class="grid-2">
-      <input
-        id="timeAmountInput"
-        type="number"
-        min="1"
-        placeholder="0"
-        value="${state.timeAmount}"
-      >
-
-      <select id="timeUnitSelect">
-        <option value="Hours" ${state.timeUnit === "Hours" ? "selected" : ""}>
-          ${t.unitH}
-        </option>
-        <option value="Minutes" ${state.timeUnit === "Minutes" ? "selected" : ""}>
-          ${t.unitM}
-        </option>
+ } function renderQuestionnaire() {
+  const pct = (state.currentStep / 5) * 100;
+  const t = langDict[state.language || "English"] || langDict["English"];
+  let html = `<button class="theme-toggle" onclick="toggleTheme()">${state.theme==='light'?'🌙':'☀️'}</button>
+    <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    <div style="font-size:12px;color:var(--sub);margin-bottom:15px;font-weight:600">${t.step} ${state.currentStep} OF 5</div>`;
+  
+  if (state.currentStep === 1) {
+    html += `<h3>Choose Language / Pilih Bahasa</h3>
+      <button class="btn ${state.language==='Bahasa Indonesia'?'btn-active':''}" onclick="state.language='Bahasa Indonesia';state.currentStep++;render()">🇮🇩 Bahasa Indonesia</button>
+      <button class="btn ${state.language==='English'?'btn-active':''}" onclick="state.language='English';state.currentStep++;render()">🇬🇧 English</button>`;
+  } else if (state.currentStep === 2) {
+    html += `<h3>${t.q2}</h3>
+      <select id="eduSelect" onchange="state.educationLevel=this.value;state.currentStep++;render()">
+        <option value="" disabled ${!state.educationLevel?'selected':''}>${t.selectOpt}</option>
+        <option value="${t.jh}" ${state.educationLevel===t.jh?'selected':''}>${t.jh}</option>
+        <option value="${t.sh}" ${state.educationLevel===t.sh?'selected':''}>${t.sh}</option>
+        <option value="${t.bach}" ${state.educationLevel===t.bach?'selected':''}>${t.bach}</option>
+        <option value="${t.mast}" ${state.educationLevel===t.mast?'selected':''}>${t.mast}</option>
       </select>
-    </div>
-
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:25px;gap:20px;">
-      <button type="button" class="btn-back" id="backBtn">
-        ${t.back}
-      </button>
-
-      <button
-        type="button"
-        id="subBtn"
-        class="btn btn-next"
-        ${!state.timeAmount.toString().trim() ? 'disabled style="opacity:0.4"' : ''}
-      >
-        ${t.finish}
-      </button>
-    </div>
-  `;
-}
-      <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex"><button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button></div>`;
+  } else if (state.currentStep === 3) {
+    html += `<h3>${t.q3}</h3><div class="grid-2">`;
+    subjectOptions.forEach(sub => {
+      html += `<button class="btn ${state.subjects.includes(sub)?'btn-active':''}" onclick="toggleSubject('${sub}')">${sub}</button>`;
+    });
+    html += `</div>`;
+    if (state.subjects.includes("Other")) {
+      html += `<input id="otherInput" type="text" placeholder="${t.otherPlh}" value="${state.otherSubject}" oninput="state.otherSubject=this.value">`;
+    }
+    html += `<div style="display:flex;justify-content:space-between;align-items:center"><button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button><button class="btn btn-next" ${state.subjects.length===0?'disabled style="opacity:0.4"':''} onclick="state.currentStep++;render()">${t.next}</button></div>`;
+  } else if (state.currentStep === 4) {
+    html += `<h3>${t.q4}</h3><div class="slider-box"><div style="display:flex;justify-content:space-between;align-items:center;font-weight:600"><span>${t.est}</span><div style="display:flex;align-items:center;gap:4px"><input type="number" min="10" max="100" id="numBox" class="num-input" value="${state.masteryLevel}" oninput="syncMastery(this.value, 'slider')">%</div></div><input type="range" min="10" max="100" id="slideBar" value="${state.masteryLevel}" oninput="syncMastery(this.value, 'box')"></div><div style="display:flex;justify-content:space-between;align-items:center"><button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button><button class="btn btn-next" onclick="state.currentStep++;render()">${t.next}</button></div>`;
+  } else if (state.currentStep === 5) {
+    html += `<h3>${t.q5}</h3>
+      <div class="grid-2">
+        <input id="timeAmountInput" type="number" min="1" placeholder="0" value="${state.timeAmount}" oninput="updateTimeAmount(this.value)">
+        <select id="timeUnitSelect" onchange="updateTimeUnit(this.value)">
+          <option value="Hours" ${state.timeUnit==='Hours'?'selected':''}>${t.unitH}</option>
+          <option value="Minutes" ${state.timeUnit==='Minutes'?'selected':''}>${t.unitM}</option>
+        </select>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:25px">
         <button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button>
-        <button
-          id="subBtn"
-          class="btn btn-next"
-          ${!state.timeAmount.toString().trim() ? 'disabled style="opacity:0.4"' : ''}
-          onclick="localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); window.location.href='dashboard.html';"
-        >${t.finish}</button>
+        <button id="subBtn" class="btn btn-next" ${!state.timeAmount.toString().trim()?'disabled style="opacity:0.4"':''} onclick="localStorage.setItem(STORAGE_KEY,JSON.stringify(state));window.location.href='dashboard.html'">${t.finish}</button>
       </div>`;
-  }
-      <div style="display:flex;justify-content:space-between;align-items:center"><button class="btn-back" onclick="state.currentStep--;render()">${t.back}</button><button id="subBtn" class="btn btn-next" ${!state.timeAmount.toString().trim()?'disabled style="opacity:0.4"':''} 
-onclick="localStorage.setItem(STORAGE_KEY, JSON.stringify(state));window.location.href='dashboard.html'>${t.finish}</button></div>`;
   }
   app.innerHTML = html;
 }
@@ -134,69 +129,24 @@ function syncMastery(val, target) {
   if (target === 'box') document.getElementById('numBox').value = num;
 }
 
-// FUNGSI BARU: Deteksi input angka durasi untuk memunculkan tombol Submit
 function updateTimeAmount(val) {
   state.timeAmount = val;
   const btn = document.getElementById('subBtn');
   if (btn) {
-    // Jika kolom angka sudah diisi dan tidak kosong, langsung munculkan tombolnya!
-    if (val.toString().trim() !== "") {
-      btn.disabled = false;
-      btn.style.opacity = "1";
-    } else {
-      btn.disabled = true;
-      btn.style.opacity = "0.4";
-    }
+    if (val.toString().trim() !== "") { btn.disabled = false; btn.style.opacity = "1"; } 
+    else { btn.disabled = true; btn.style.opacity = "0.4"; }
   }
 }
 window.updateTimeAmount = updateTimeAmount;
 
-
 function updateTimeUnit(val) { state.timeUnit = val; }
+window.updateTimeUnit = updateTimeUnit;
 
 function toggleSubject(sub) {
   if (state.subjects.includes(sub)) { state.subjects = state.subjects.filter(s => s !== sub); } 
   else { state.subjects.push(sub); }
-  app.innerHTML = html;
-
-// Step 5 controls
-if (state.currentStep === 5) {
-  const timeInput = document.getElementById("timeAmountInput");
-  const timeUnit = document.getElementById("timeUnitSelect");
-  const backBtn = document.getElementById("backBtn");
-  const subBtn = document.getElementById("subBtn");
-
-  if (timeInput) {
-    timeInput.addEventListener("input", function () {
-      updateTimeAmount(this.value);
-    });
-  }
-
-  if (timeUnit) {
-    timeUnit.addEventListener("change", function () {
-      updateTimeUnit(this.value);
-    });
-  }
-
-  if (backBtn) {
-    backBtn.addEventListener("click", function () {
-      state.currentStep--;
-      render();
-    });
-  }
-
-  if (subBtn) {
-    subBtn.addEventListener("click", function () {
-      if (!state.timeAmount.toString().trim()) return;
-
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify(state)
-      );
-
-      window.location.href = "dashboard.html";
-    });
-  }
+  renderQuestionnaire();
 }
+window.toggleSubject = toggleSubject;
 
 render();
