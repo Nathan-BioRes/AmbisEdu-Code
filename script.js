@@ -94,11 +94,23 @@ function syncMastery(val, target) {
   if (target === 'box') document.getElementById('numBox').value = num;
 }
 
+// FUNGSI BARU: Deteksi input angka durasi untuk memunculkan tombol Submit
 function updateTimeAmount(val) {
   state.timeAmount = val;
   const btn = document.getElementById('subBtn');
-  if (btn) btn.disabled = !val.trim();
+  if (btn) {
+    // Jika kolom angka sudah diisi dan tidak kosong, langsung munculkan tombolnya!
+    if (val.toString().trim() !== "") {
+      btn.disabled = false;
+      btn.style.opacity = "1";
+    } else {
+      btn.disabled = true;
+      btn.style.opacity = "0.4";
+    }
+  }
 }
+window.updateTimeAmount = updateTimeAmount;
+
 
 function updateTimeUnit(val) { state.timeUnit = val; }
 
