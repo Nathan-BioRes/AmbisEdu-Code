@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AmbisEdu</title>
+<style>
+:root{--bg:#f8fafc;--card:#fff;--text:#0f172a;--border:#e2e8f0;--primary:#4f46e5;--active:#e0e7ff;--sub:#64748b}
+.dark{--bg:#0f172a;--card:#1e293b;--text:#f8fafc;--border:#334155;--primary:#6366f1;--active:#312e81;--sub:#94a3b8}
+*{box-sizing:border-box}
+body{margin:0;padding:20px;min-height:90vh;display:flex;justify-content:center;align-items:center;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,sans-serif;transition:.2s}
+.card{width:100%;max-width:500px;background:var(--card);border:1px solid var(--border);border-radius:24px;padding:24px;box-shadow:0 10px 25px -5px #0000000d;position:relative}
+.theme-toggle{position:absolute;top:20px;right:20px;background:transparent;border:0;font-size:20px;cursor:pointer;padding:5px;z-index:10}
+.brand{display:inline-flex;width:48px;height:48px;background:var(--primary);color:#fff;font-weight:bold;border-radius:14px;align-items:center;justify-content:center;margin-bottom:12px}
+.progress-bar{height:6px;background:var(--border);border-radius:10px;margin-bottom:20px;overflow:hidden;width:80%}
+.progress-fill{height:100%;background:var(--primary);transition:width .3s}
+.btn{display:block;width:100%;padding:14px;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:14px;text-align:left;font-weight:500;font-size:16px;cursor:pointer;margin-bottom:10px;transition:.2s}
+.btn:hover{background:var(--bg)}
+.btn-active{background:var(--active);border-color:var(--primary);color:var(--primary)}
+.btn-next{background:var(--primary);color:#fff;text-align:center;border:0;font-weight:600;margin-top:15px;width:120px;height:48px;border-radius:12px;cursor:pointer}
+.btn-back{background:transparent;border:0;color:var(--sub);font-weight:600;cursor:pointer;margin-top:25px;padding:10px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+select,input[type=text],input[type=number]{width:100%;padding:14px;border:1px solid var(--border);border-radius:12px;font-size:16px;margin-top:10px;background:var(--card);color:var(--text);box-sizing:border-box}
+.slider-box{background:var(--bg);padding:16px;border-radius:16px;border:1px solid var(--border);margin-top:15px}
+input[type=range]{width:100%;accent-color:var(--primary);margin-top:15px}
+@media(max-width:600px){body{padding:14px}.card{padding:20px}.grid-2{grid-template-columns:1fr}}
+  .faq-item{border:1px solid var(--border);border-radius:14px;margin-top:9px;overflow:hidden}
+.faq-q{width:100%;padding:14px;background:var(--card);color:var(--text);border:0;text-align:left;font:600 14px system-ui;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.faq-q b{font-size:19px;font-weight:400;transition:.2s}
+.faq-a{display:none;padding:0 14px 14px;background:var(--card);color:var(--sub);font-size:13px;line-height:1.55}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-q b{transform:rotate(45deg)}
+</style>
+</head>
+<body>
+<div id="app" class="card"></div>
+<script src="./script.js"></script>
+</body>
+</html>
